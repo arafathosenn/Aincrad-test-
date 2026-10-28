@@ -137,7 +137,7 @@
   .btn-primary.loading .btn-text { display: none; }
   `;
 
-  const APP_MARKUP = \`
+  const APP_MARKUP = `
   <div class="bg-glow cyan"></div>
   <div class="bg-glow purple"></div>
 
@@ -230,7 +230,7 @@
       </div>
     </div>
   </section>
-  \`;
+  `;
 
   // Inject CSS and HTML
   const style = document.createElement("style");
@@ -270,16 +270,16 @@
   function showToast(title, message, type = "success") {
     const wrap = document.getElementById('toastWrap');
     const toast = document.createElement('div');
-    toast.className = \`cyber-toast \${type}\`;
+    toast.className = `cyber-toast ${type}`;
     const icon = type === 'success' ? '✓' : '✗';
     
-    toast.innerHTML = \`
-      <div class="toast-icon">\${icon}</div>
+    toast.innerHTML = `
+      <div class="toast-icon">${icon}</div>
       <div>
-        <div class="toast-title">\${title}</div>
-        <div class="toast-msg">\${message}</div>
+        <div class="toast-title">${title}</div>
+        <div class="toast-msg">${message}</div>
       </div>
-    \`;
+    `;
     
     wrap.appendChild(toast);
     
@@ -418,13 +418,13 @@
       if(!domain) throw new Error("Domain not supported");
       
       const proto = location.protocol;
-      const sessionRes = await fetch(\`\${proto}//\${domain}/api/session-info\`, {credentials:"include"});
+      const sessionRes = await fetch(`${proto}//${domain}/api/session-info`, {credentials:"include"});
       if(!sessionRes.ok) throw new Error("Session failed");
       const sessionData = await sessionRes.json();
       if(!sessionData.sessionToken) throw new Error("No token");
 
       const input = encodeURIComponent(JSON.stringify({"0":{"json":{"token":sessionData.sessionToken,"progress":sessionData.totalStage+1,"stageId":sessionData.stageId}}}));
-      const bypassRes = await fetch(\`\${proto}//\${domain}/api/trpc/linkSession.nextStage?batch=1&input=\${input}\`, {credentials:"include", headers:{"trpc-accept":"application/jsonl","x-trpc-source":"nextjs-react"}});
+      const bypassRes = await fetch(`${proto}//${domain}/api/trpc/linkSession.nextStage?batch=1&input=${input}`, {credentials:"include", headers:{"trpc-accept":"application/jsonl","x-trpc-source":"nextjs-react"}});
       
       const dest = parseDestination(await bypassRes.text());
       if(dest) {
@@ -462,8 +462,8 @@
       if (percent >= 100) percent = 100;
       if (timeLeft <= 0) timeLeft = 0;
 
-      progressFill.style.width = \`\${percent}%\`;
-      progressText.innerText = \`PROCESSING \${percent}%\`;
+      progressFill.style.width = `${percent}%`;
+      progressText.innerText = `PROCESSING ${percent}%`;
       countdownDisplay.innerText = timeLeft;
 
       if (elapsed < durationMs) {
